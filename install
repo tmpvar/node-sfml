@@ -47,7 +47,7 @@ if [ "$platform" != 'darwin' ] ; then
    #libsndfile
    if [ ! -e "./libsndfile" ] ; then
       echo "Downloading libsndfile source"
-      `/usr/bin/curl -o "libsndfile.tar.gz" "http://www.mega-nerd.com/libsndfile/files/libsndfile-1.0.21.tar.gz"`
+      `/usr/bin/curl -o "libsndfile.tar.gz" "http://www.mega-nerd.com/libsndfile/files/libsndfile-1.0.24.tar.gz"`
       `tar -xvf "libsndfile.tar.gz"`
       rm ./*.tar.gz
       mv libsndfile*/ libsndfile
