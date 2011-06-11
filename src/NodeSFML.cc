@@ -1,4 +1,5 @@
-#include <v8.h>
+#include <node.h>
+using namespace node;
 using namespace v8;
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
@@ -72,14 +73,14 @@ Handle<Value> NodeSFMLMusic_OpenFromMemory(const Arguments &args) {
 	Handle<Value> buffer = args[0];
 	if(node::Buffer::HasInstance(buffer)) {
 		node::Buffer* node_buffer = node::ObjectWrap::Unwrap<node::Buffer>(buffer->ToObject());
-		 success = Boolean::New(((sf::Music*)External::Unwrap(args.Holder()->GetInternalField(0)))->OpenFromMemory(
-		 	node_buffer->data(), node_buffer->length()
-		 ));
+		success = Boolean::New(((sf::Music*)External::Unwrap(args.Holder()->GetInternalField(0)))->OpenFromMemory(
+			Buffer::Data(node_buffer), Buffer::Length(node_buffer)
+		));
 	}
 	else {
-		 success = Boolean::New(((sf::Music*)External::Unwrap(args.Holder()->GetInternalField(0)))->OpenFromMemory(
-		 	(char*)args[0]->IntegerValue(), args[1]->IntegerValue()
-		 ));
+		success = Boolean::New(((sf::Music*)External::Unwrap(args.Holder()->GetInternalField(0)))->OpenFromMemory(
+			(char*)args[0]->IntegerValue(), args[1]->IntegerValue()
+		));
 	}
 	return scope.Close(success);
 }
@@ -671,3 +672,4 @@ init (Handle<Object> target)
   NodeSFMLMusicInstanceTemplate->Set("Stop", FunctionTemplate::New(NodeSFMLMusic_Stop));
   target->Set(String::New("Music"), NodeSFMLMusicTemplate->GetFunction());
 }
+
